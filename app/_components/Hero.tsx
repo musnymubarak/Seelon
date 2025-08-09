@@ -38,51 +38,56 @@ const suggestions = [
 
 
 function Hero() {
-    return (
-        <div className='mt-24 w-full flex justify-center'>
-            <div className='max-w-3xl w-full text-center space-y-6'>
-                <h1 className='text-xl md:text-5xl font-bold'>
-                    I'm <span className='text-[#fc9513]'>Seelon</span> AI assistant, How can I help you?
-                </h1>
-                <p className='text-lg'>
-                    Explore Sri Lanka your way with Seelon AI — a smart travel itinerary creator that designs personalized trips based on your interests. From beaches to culture and adventure, get a custom
-                    plan that makes your journey effortless and unforgettable.
-                </p>
-                <div>
-                    <div className='border rounded-2xl p-4 relative'>
-                        <Textarea
-                            placeholder='Create your own itinerary'
-                            className='w-full h-28 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none'
-                        />
-                        <Button size={'icon'} className='absolute right-6 bottom-6'>
-                            <Send className='h-4 w-4' />
-                        </Button>
-                    </div>
-                </div>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                    {suggestions.map((item, index) => (
-                        <div
-                            key={index}
-                            className='relative border rounded-lg p-4 overflow-hidden text-white
-             hover:scale-105 hover:shadow-xl transition-transform transition-shadow duration-300'
-                        >
-                            {/* Background image */}
-                            <div
-                                className='absolute inset-0 bg-cover bg-center filter brightness-35'
-                                style={{ backgroundImage: `url(${item.image})` }}
-                                aria-hidden="true"
-                            />
-                            {/* Content above the background */}
-                            <div className='relative z-10'>
-                                <h2 className='text-lg font-semibold'>{item.title}</h2>
-                                <p className='text-sm'>{item.description}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+  return (
+    <div className="mt-12 w-full flex justify-center px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl w-full text-center space-y-6">
+        <h1 className="text-lg sm:text-2xl md:text-4xl lg:text-5xl font-bold">
+          I'm <span className="text-[#fc9513]">Seelon</span> AI assistant, How can I help you?
+        </h1>
+        <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto">
+          Explore Sri Lanka your way with Seelon. From beaches to culture and adventure, get a custom plan that makes your journey effortless and unforgettable.
+        </p>
+
+        {/* Textarea container: match max-w-4xl and full width */}
+        <div className="max-w-4xl w-full mx-auto">
+          <div className="border rounded-2xl p-3 sm:p-4 md:p-6 relative w-full">
+            <Textarea
+              placeholder="Create your own itinerary"
+              className="w-full h-24 sm:h-28 md:h-32 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none text-base sm:text-lg"
+            />
+            <Button size={"icon"} className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6">
+              <Send className="h-4 w-4 sm:h-5 sm:w-5" />
+            </Button>
+          </div>
         </div>
-    )
+
+        {/* Grid container */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          {suggestions.map((item, index) => (
+            <div
+              key={index}
+              className="relative border rounded-lg p-4 sm:p-5 md:p-6 overflow-hidden text-white
+                hover:scale-105 hover:shadow-xl transition-transform transition-shadow duration-300"
+            >
+              {/* Background image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center filter brightness-35"
+                style={{ backgroundImage: `url(${item.image})` }}
+                aria-hidden="true"
+              />
+              {/* Content above the background */}
+              <div className="relative z-10">
+                <h2 className="text-lg sm:text-xl font-semibold">{item.title}</h2>
+                <p className="text-sm sm:text-base">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 }
+
+
 
 export default Hero
