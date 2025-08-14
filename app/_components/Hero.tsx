@@ -1,43 +1,59 @@
+"use client"
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import { useUser } from '@clerk/nextjs';
 import { Send } from 'lucide-react'
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { use } from 'react'
 
 const suggestions = [
-    {
-        title: 'Explore Sri Lanka',
-        description: 'Discover the best places to visit in Sri Lanka with personalized itineraries.',
-        image: 'https://lankapura.com/wp-content/uploads/2024/09/10-Best-Places-to-Visit-in-Sri-Lanka.jpg',
-    },
-    {
-        title: 'Cultural Experiences',
-        description: 'Immerse yourself in the rich culture and history of Sri Lanka.',
-        image: 'https://cdn.prod.website-files.com/6364d88dd010ce5c6f8aa8fc/66d7df75442e055ccf47a8b4_669641699b6aeb59800255bf_kandyan-dance-and-drum-show-mob.webp',
-    },
-    {
-        title: 'Adventure Activities',
-        description: 'Find thrilling adventure activities tailored to your interests.',
-        image: 'https://zaaratravels.com/wp-content/uploads/2023/10/68-1024x683-1.jpg',
-    },
-    {
-        title: 'Beach Surfing',
-        description: 'Catch the best waves and enjoy stunning beaches perfect for surfing.',
-        image: 'https://radar-list.com/wp-content/uploads/2021/08/photo-1502680390469-be75c86b636f-1024x683.jpeg',
-    },
-    {
-        title: 'Mountain Escapes',
-        description: 'Experience breathtaking mountain views and refreshing cool climates.',
-        image: 'https://tripjive.com/wp-content/uploads/2024/10/knuckles-mountain-range-day-tour-1024x585.jpg'
-    },
-    {
-        title: 'Hidden Gems',
-        description: 'Explore off-the-beaten-path destinations full of secrets and surprises.',
-        image: 'https://media.licdn.com/dms/image/v2/D5612AQG9evftG0DBQw/article-cover_image-shrink_600_2000/B56ZW207f6GsAQ-/0/1742529084631?e=2147483647&v=beta&t=trX92qNcbD0T-uFO5lY4RAFSsj5QnMgvVf6zR1jhPok',
-    },
+  {
+    title: 'Explore Sri Lanka',
+    description: 'Discover the best places to visit in Sri Lanka with personalized itineraries.',
+    image: 'https://lankapura.com/wp-content/uploads/2024/09/10-Best-Places-to-Visit-in-Sri-Lanka.jpg',
+  },
+  {
+    title: 'Cultural Experiences',
+    description: 'Immerse yourself in the rich culture and history of Sri Lanka.',
+    image: 'https://cdn.prod.website-files.com/6364d88dd010ce5c6f8aa8fc/66d7df75442e055ccf47a8b4_669641699b6aeb59800255bf_kandyan-dance-and-drum-show-mob.webp',
+  },
+  {
+    title: 'Adventure Activities',
+    description: 'Find thrilling adventure activities tailored to your interests.',
+    image: 'https://zaaratravels.com/wp-content/uploads/2023/10/68-1024x683-1.jpg',
+  },
+  {
+    title: 'Beach Surfing',
+    description: 'Catch the best waves and enjoy stunning beaches perfect for surfing.',
+    image: 'https://radar-list.com/wp-content/uploads/2021/08/photo-1502680390469-be75c86b636f-1024x683.jpeg',
+  },
+  {
+    title: 'Mountain Escapes',
+    description: 'Experience breathtaking mountain views and refreshing cool climates.',
+    image: 'https://tripjive.com/wp-content/uploads/2024/10/knuckles-mountain-range-day-tour-1024x585.jpg'
+  },
+  {
+    title: 'Hidden Gems',
+    description: 'Explore off-the-beaten-path destinations full of secrets and surprises.',
+    image: 'https://media.licdn.com/dms/image/v2/D5612AQG9evftG0DBQw/article-cover_image-shrink_600_2000/B56ZW207f6GsAQ-/0/1742529084631?e=2147483647&v=beta&t=trX92qNcbD0T-uFO5lY4RAFSsj5QnMgvVf6zR1jhPok',
+  },
 ];
 
 
 function Hero() {
+
+  const { user } = useUser()
+
+  const router = useRouter();
+
+  const onSend = () => {
+    if (!user) {
+      router.push('/sign-in');
+      return;
+    }
+
+  }
+
   return (
     <div className="mt-12 w-full flex justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl w-full text-center space-y-6">
@@ -55,7 +71,11 @@ function Hero() {
               placeholder="Create your own itinerary"
               className="w-full h-24 sm:h-28 md:h-32 bg-transparent border-none focus-visible:ring-0 shadow-none resize-none text-base sm:text-lg"
             />
-            <Button size={"icon"} className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6">
+            <Button
+              size="icon"
+              className="absolute right-4 bottom-4 sm:right-6 sm:bottom-6"
+              onClick={onSend}
+            >
               <Send className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
           </div>

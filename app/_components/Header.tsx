@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Sign } from "crypto";
+import { SignUpButton } from "@clerk/nextjs";
 
 const menuOptions = [
   { name: "Home", path: "/" },
@@ -59,7 +61,11 @@ function Header() {
             {menu.name}
           </Link>
         ))}
-        <Button>Get Started</Button>
+        <SignUpButton mode="modal">
+          <Button >
+            Get Started
+          </Button>
+        </SignUpButton>
       </nav>
 
       {/* Mobile menu dropdown */}
@@ -78,9 +84,11 @@ function Header() {
               </li>
             ))}
             <li>
-              <Button onClick={() => setMenuOpen(false)} className="w-full">
-                Get Started
-              </Button>
+              <SignUpButton mode="modal">
+                <Button className="w-full" onClick={() => setMenuOpen(false)}>
+                  Get Started
+                </Button>
+              </SignUpButton>
             </li>
           </ul>
         </nav>
