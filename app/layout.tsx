@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Provider from "./Provider";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ConvexClientProvider } from "./ConvexClientProvider";
 
 
 
@@ -23,16 +24,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={outfit.className}
-      >
-        <Provider>
-          {children}
-        </Provider>
+      <html lang="en">
+        <body
+          className={outfit.className}
+        >
+          <ConvexClientProvider>
+            {children}
+          </ConvexClientProvider>
 
-      </body>
-    </html>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
