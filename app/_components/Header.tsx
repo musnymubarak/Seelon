@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Sign } from "crypto";
-import { SignUpButton } from "@clerk/nextjs";
+import { SignUpButton, useUser } from "@clerk/nextjs";
 
 const menuOptions = [
   { name: "Home", path: "/" },
@@ -17,6 +16,7 @@ const menuOptions = [
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const user = useUser();
   return (
     <header className="flex justify-between items-center p-4 max-w-7xl mx-auto relative">
       {/* Logo Section */}
@@ -61,11 +61,16 @@ function Header() {
             {menu.name}
           </Link>
         ))}
-        <SignUpButton mode="modal">
-          <Button >
-            Get Started
-          </Button>
-        </SignUpButton>
+        {!user ?
+          <SignUpButton mode="modal">
+            <Button >
+              Get Started
+            </Button>
+          </SignUpButton> :
+          <Link href="/create-trip" >
+            <Button>Create New Trip</Button>
+          </Link>
+        }
       </nav>
 
       {/* Mobile menu dropdown */}
@@ -84,11 +89,18 @@ function Header() {
               </li>
             ))}
             <li>
-              <SignUpButton mode="modal">
-                <Button className="w-full" onClick={() => setMenuOpen(false)}>
-                  Get Started
-                </Button>
-              </SignUpButton>
+              {!user ?
+                <SignUpButton mode="modal">
+                  <Button className="w-full" onClick={() => setMenuOpen(false)}>
+                    Get Started
+                  </Button>
+                </SignUpButton> :
+                <Link href="/create-trip" >
+                  <Button className="w-full" onClick={() => setMenuOpen(false)}>
+                    Create New Trip
+                  </Button>
+                </Link>
+              }
             </li>
           </ul>
         </nav>
