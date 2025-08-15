@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useContext, useEffect, useState } from 'react';
 import Header from './_components/Header';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
@@ -43,3 +43,7 @@ function Provider({
 }
 
 export default Provider;
+
+export const useUserDetail = () => {
+  return useContext(UserDetailContext);
+}
