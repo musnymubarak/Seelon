@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './_components/Header';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { useUser } from '@clerk/nextjs';
+import { UserDetailContext } from '@/context/UserDetailContext';
 
 function Provider({
   children,
@@ -11,29 +12,33 @@ function Provider({
 }>) {
 
   const createUserMutation = useMutation(api.User.CreateNewUser);
+  const [userDetail, setUserDetail] = useState<any>();
   const { user } = useUser();
-
-  useEffect(() => {
-    user && createNewUser();
-  }, [user]);
 
   const createNewUser = async () => {
     if (user) {
-      await createUserMutation({
+      const result = await createUserMutation({
         email: user?.primaryEmailAddress?.emailAddress ?? '',
         name: user?.fullName ?? '',
         imageURL: user?.imageUrl ?? ''
       });
+      setUserDetail(result);
     }
   };
 
-
+  useEffect(() => {
+    if (user) {
+      createNewUser();
+    }
+  }, [user]);
 
   return (
-    <div>
-      <Header />
-      {children}
-    </div>
+    <UserDetailContext.Provider value={{ userDetail, setUserDetail }}>
+      <div>
+        <Header />
+        {children}
+      </div>
+    </UserDetailContext.Provider>
   );
 }
 
